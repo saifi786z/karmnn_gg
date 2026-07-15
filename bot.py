@@ -575,7 +575,7 @@ async def show_stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"{emojify_text('📈')} <b>Success Rate:</b> <code>{stats['approved']/stats['total']*100:.1f}%</code>" if stats['total'] > 0 else f"{emojify_text('📈')} <b>Success Rate:</b> <code>0%</code>"
     )
  
- keyboard = [[InlineKeyboardButton(f"{emojify_button('🔄')} Refresh Stats", callback_data="stats")]]
+    keyboard = [[InlineKeyboardButton(f"{emojify_button('🔄')} Refresh Stats", callback_data="stats")]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
     if update.callback_query:
