@@ -1060,8 +1060,10 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # ================ MAIN ================
 def main():
+    """Start the bot with polling"""
     application = Application.builder().token(BOT_TOKEN).build()
     
+    # Add command handlers
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("chk", start_check))
     application.add_handler(CommandHandler("stats", show_stats))
@@ -1069,22 +1071,27 @@ def main():
     application.add_handler(CommandHandler("cancel", cancel))
     application.add_handler(CommandHandler("help", show_help))
     
+    # Admin commands
     application.add_handler(CommandHandler("addchannel", add_channel))
     application.add_handler(CommandHandler("removechannel", remove_channel))
     application.add_handler(CommandHandler("listchannels", list_channels))
     application.add_handler(CommandHandler("broadcast", broadcast))
     
+    # Callback query handler
     application.add_handler(CallbackQueryHandler(button_handler))
+    
+    # Message handler
     application.add_handler(MessageHandler(
         filters.TEXT | filters.Document.ALL, 
         handle_message
     ))
     
+    # Error handler
     application.add_error_handler(error_handler)
     
-    print("🤖 Bot started! Press Ctrl+C to stop.")
+    # Start the bot with polling (NO webhook!)
+    logger.info("🤖 Bot started with polling! Press Ctrl+C to stop.")
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == "__main__":
     main()
-    
